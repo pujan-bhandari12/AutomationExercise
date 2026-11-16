@@ -1,0 +1,19 @@
+{
+  "name": "automation-exercise-k6-load-test",
+  "version": "1.0.0",
+  "description": "k6 Performance and Load Testing Suite for Automation Exercise",
+  "scripts": {
+    "test:smoke": "k6 run tests/smoke.test.js",
+    "test:api": "k6 run tests/api-load.test.js",
+    "test:web": "k6 run tests/web-e2e-load.test.js",
+    "test:stress": "k6 run tests/stress-spike.test.js"
+  },
+  "keywords": [
+    "k6",
+    "performance-testing",
+    "load-testing",
+    "qa",
+    "automation-exercise"
+  ],
+  "license": "MIT"
+}
