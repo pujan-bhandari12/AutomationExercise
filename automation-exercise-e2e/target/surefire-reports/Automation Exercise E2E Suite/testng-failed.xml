@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Automation Exercise E2E Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="Full Functional &amp; E2E Flow(failed)" verbose="0">
+    <classes>
+      <class name="tests.AutomationExerciseSuiteTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="tc010_verifyDeleteAccountCleanup"/>
+          <include name="initPages"/>
+        </methods>
+      </class> <!-- tests.AutomationExerciseSuiteTest -->
+    </classes>
+  </test> <!-- Full Functional & E2E Flow(failed) -->
+</suite> <!-- Failed suite [Automation Exercise E2E Suite] -->
