@@ -97,4 +97,4 @@ open reports/api-load-report.html
 **Pujan Bhandari**  
 QA Engineer | Test Automation & Performance Testing  
 Portfolio: [pujanbhandari.com.np](https://pujanbhandari.com.np)
-    └── reports/                            # Generated HTML & JSON test reports
+
