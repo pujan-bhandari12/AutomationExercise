@@ -1,7 +1,0 @@
-pages/CartPage.class
-pages/CheckoutPaymentPage.class
-pages/LoginSignupPage.class
-tests/AutomationExerciseSuiteTest.class
-pages/HomePage.class
-pages/ProductsPage.class
-base/BaseTest.class
