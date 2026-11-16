@@ -40,7 +40,7 @@ cd AutomationExercise
 ### 2. Run Java + Selenium UI Automation Tests
 
 ```bash
-cd automation-exercise-Selenium
+cd ../automation-exercise-Selenium
 mvn clean test
 ```
 
