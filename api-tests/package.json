@@ -1,0 +1,12 @@
+{
+  "name": "automation-exercise-api-tests",
+  "version": "1.0.0",
+  "description": "Automated API Test Suite using Postman and Newman",
+  "scripts": {
+    "test": "newman run collections/automation-exercise.postman_collection.json -e environments/prod.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export reports/report.html"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

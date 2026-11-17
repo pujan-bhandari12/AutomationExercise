@@ -1,0 +1,240 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
+    "name": "Automation Exercise API Suite",
+    "description": "End-to-end API test suite covering Products, Brands, Search, and User Account lifecycle.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products & Brands",
+      "item": [
+        {
+          "name": "GET All Products List",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response contains products array\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(200);",
+                  "    pm.expect(jsonData.products).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "pm.test(\"Response time is below 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productsList",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productsList"]
+            }
+          }
+        },
+        {
+          "name": "POST To All Products List (Negative Test - 405)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"API returns 405 responseCode in JSON body\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(405);",
+                  "    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/productsList",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "productsList"]
+            }
+          }
+        },
+        {
+          "name": "POST Search Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Search returns matching products\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(200);",
+                  "    pm.expect(jsonData.products).to.be.an('array').that.is.not.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "search_product", "value": "top", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/searchProduct",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "searchProduct"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Account Lifecycle",
+      "item": [
+        {
+          "name": "POST Create User Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const randomNum = Math.floor(Math.random() * 100000);",
+                  "pm.environment.set(\"testEmail\", `qa_user_${randomNum}@example.com`);",
+                  "pm.environment.set(\"testPassword\", \"Test@1234\");"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"User created successfully (201)\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(201);",
+                  "    pm.expect(jsonData.message).to.eql(\"User created!\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "QA Tester", "type": "text" },
+                { "key": "email", "value": "{{testEmail}}", "type": "text" },
+                { "key": "password", "value": "{{testPassword}}", "type": "text" },
+                { "key": "title", "value": "Mr", "type": "text" },
+                { "key": "birth_date", "value": "15", "type": "text" },
+                { "key": "birth_month", "value": "05", "type": "text" },
+                { "key": "birth_year", "value": "1999", "type": "text" },
+                { "key": "firstname", "value": "QA", "type": "text" },
+                { "key": "lastname", "value": "Tester", "type": "text" },
+                { "key": "company", "value": "QA Lab", "type": "text" },
+                { "key": "address1", "value": "123 Test Street", "type": "text" },
+                { "key": "country", "value": "Nepal", "type": "text" },
+                { "key": "zipcode", "value": "44600", "type": "text" },
+                { "key": "state", "value": "Bagmati", "type": "text" },
+                { "key": "city", "value": "Lalitpur", "type": "text" },
+                { "key": "mobile_number", "value": "9800000000", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/createAccount",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "createAccount"]
+            }
+          }
+        },
+        {
+          "name": "POST Verify Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Login verified successfully\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(200);",
+                  "    pm.expect(jsonData.message).to.eql(\"User exists!\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "email", "value": "{{testEmail}}", "type": "text" },
+                { "key": "password", "value": "{{testPassword}}", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/verifyLogin",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verifyLogin"]
+            }
+          }
+        },
+        {
+          "name": "DELETE User Account (Cleanup)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Account deleted successfully\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.responseCode).to.eql(200);",
+                  "    pm.expect(jsonData.message).to.eql(\"Account deleted!\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "email", "value": "{{testEmail}}", "type": "text" },
+                { "key": "password", "value": "{{testPassword}}", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/deleteAccount",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "deleteAccount"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
